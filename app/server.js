@@ -46,8 +46,8 @@ appServer.use(bodyParser.json({
 // Routes
 // =============================================================
 
-  require("./app/routing/apiRoutes")(appServer);
-  require("./app/routing/htmlRoutes")(appServer);
+  require("../app/routing/apiRoutes")(appServer);
+  require("../app/routing/htmlRoutes")(appServer);
 
 
 // Basic route that sends the user first to the AJAX Page
