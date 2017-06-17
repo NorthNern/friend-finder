@@ -20,6 +20,8 @@ appServer.use(bodyParser.json({
   type: "application/vnd.api+json"
 }));
 
+appServer.use(express.static('app/public/'));
+
 // (DATA)
 // =============================================================
 // var userArray = []
@@ -48,7 +50,6 @@ appServer.use(bodyParser.json({
 
   require("./app/routing/apiRoutes")(appServer);
   require("./app/routing/htmlRoutes")(appServer);
-
 
 // Basic route that sends the user first to the AJAX Page
 // appServer.get("/", function(req, res) {
