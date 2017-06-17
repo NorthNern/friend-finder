@@ -8,7 +8,7 @@ var path = require("path");
 // Sets up the Express App
 // =============================================================
 var appServer = express();
-var PORT = 4000;
+var PORT = process.env.PORT || 8080;
 
 // Sets up the Express app to handle data parsing
 appServer.use(bodyParser.json());
@@ -22,72 +22,52 @@ appServer.use(bodyParser.json({
 
 // (DATA)
 // =============================================================
-var userArray = []
+// var userArray = []
 
-// This is a test, COMMENT OUT
-userArray[0] = {
-  "name":"Testy McTesterface",
-  "photo":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
-  "scores":[
-      5,
-      1,
-      4,
-      4,
-      5,
-      1,
-      2,
-      5,
-      4,
-      1
-    ]
-}
+// // This is a test, COMMENT OUT
+// userArray[0] = {
+//   "name":"Testy McTesterface",
+//   "photo":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+//   "scores":[
+//       5,
+//       1,
+//       4,
+//       4,
+//       5,
+//       1,
+//       2,
+//       5,
+//       4,
+//       1
+//     ]
+// }
 // console.log(userArray);
 
 // Routes
 // =============================================================
 
+  require("../app/routing/apiRoutes")(appServer);
+  require("../app/routing/htmlRoutes")(appServer);
+
+
 // Basic route that sends the user first to the AJAX Page
-appServer.get("/", function(req, res) {
-  //TODO: Make this a default USE route
-  res.sendFile(path.join(__dirname, "home.html"));
-});
+// appServer.get("/", function(req, res) {
+//   //TODO: Make this a default USE route
+//   res.sendFile(path.join(__dirname, "home.html"));
+// });
 
-appServer.get("/survey", function(req, res) {
-  res.sendFile(path.join(__dirname, "survey.html"));
-});
+// appServer.get("/survey", function(req, res) {
+//   res.sendFile(path.join(__dirname, "survey.html"));
+// });
 
-appServer.get("/api/friends", function(req, res) {
-  res.json(userArray);
-});
+// appServer.get("/api/friends", function(req, res) {
+//   res.json(userArray);
+// });
 
 
 
-appServer.post("/api/friends", function(req, res) {
-  var newUser = req.body;
-  var newUserMatchScores = [];  
-  var currentMatchScore = 0;
-  // console.log(newUser);
-  for (var i = 0; i< userArray.length; i++){
-    currentMatchScore = 0;
-    for (var i2 = 0; i2 <newUser.scores.length; i2++) {
-      currentMatchScore += Math.abs(newUser.scores[i2] - userArray[i].scores[i2])
-    }
-    newUserMatchScores.push(currentMatchScore)
-  }
-  var bestMatch = userArray[0];
-  var bestMatchScore = newUserMatchScores[0]
-  for (var i = 0; i<userArray.length; i++){
-    if (newUserMatchScores[i] > bestMatchScore){
-      bestMatch = userArray[i]
-      bestMatchScore = newUserMatchScores[i]
-    }
-  }
-
-  userArray.push(newUser);
-
-  res.json(bestMatch);
-  // res.json(true)
-});
+// appServer.post("/api/friends", function(req, res) {
+  
 
 // Starts the server to begin listening
 // =============================================================
